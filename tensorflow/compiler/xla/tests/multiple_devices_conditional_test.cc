@@ -82,8 +82,9 @@ XLA_TEST_F(MultipleDevicesConditionalTest, MultipleOperands) {
           .ValueOrDie();
   auto literal0 = LiteralUtil::CreateR1<float>({1, 2, 3});
   auto literal1 = LiteralUtil::CreateR1<float>({10, 20});
-  EXPECT_EQ(LiteralUtil::MakeTuple({&literal0, &literal1}),
-            ExecuteAndTransfer(std::move(module), {&literal0, &literal1}));
+  auto result = ExecuteAndTransfer(std::move(module), {&literal0, &literal1});
+  LOG(INFO) << "result: " << result;
+  EXPECT_EQ(LiteralUtil::MakeTuple({&literal0, &literal1}), result);
 }
 
 }  // namespace
