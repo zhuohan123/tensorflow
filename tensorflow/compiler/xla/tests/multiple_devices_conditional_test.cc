@@ -65,10 +65,10 @@ ENTRY %TupleCreate.v4 (v1: f32[], v2: f32[3], v3: f32[2,3]) -> (f32[], f32[3], f
 TEST_F(MultipleDevicesConditionalTest, SimpleAdd) {
   const string& module_str = R"(
 HloModule SimpleAdd_module:
-ENTRY %add (x: f32[], y: f32[]) -> f32[] {
-  %x = f32[] parameter(0)
-  %y = f32[] parameter(1)
-  ROOT %add = f32[] add(f32[] %x, f32[] %y)
+ENTRY %add (x: f32[3], y: f32[3]) -> f32[3] {
+  %x = f32[3] parameter(0)
+  %y = f32[3] parameter(1)
+  ROOT %add = f32[3] add(f32[3] %x, f32[3] %y)
 }
 )";
   auto module =
