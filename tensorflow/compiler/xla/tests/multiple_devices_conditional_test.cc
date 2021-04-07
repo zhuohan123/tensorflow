@@ -81,5 +81,21 @@ ENTRY %add (x: f32[3], y: f32[3]) -> f32[3] {
             ExecuteAndTransfer(std::move(module), {&literal0, &literal1}));
 }
 
+// Test true and false computations that take in 2 array parameters and
+// predicate is false.
+XLA_TEST_F(MultipleDevicesConditionalTest, Parameters2ArrayFalseBranch) {
+  XlaBuilder builder(TestName());
+  XlaOp pred;
+  auto pred_arg = CreateR0Parameter<bool>(false, 0, "pred", &builder, &pred);
+  auto operand1 = ConstantR1<float>(&builder, {24.0f, 56.0f});
+  auto operand2 = ConstantR1<float>(&builder, {10.0f, 11.0f});
+  auto operands = Tuple(&builder, {operand1, operand2});
+  Conditional(pred, operands, CreateR1TupleAddComputation(), operands,
+              CreateR1TupleSubComputation());
+
+  ComputeAndCompareR1<float>(&builder, {14.0f, 45.0f}, {pred_arg.get()},
+                             error_spec_);
+}
+
 }  // namespace
 }  // namespace xla
