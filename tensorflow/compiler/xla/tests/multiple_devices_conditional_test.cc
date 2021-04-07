@@ -78,7 +78,7 @@ ENTRY %add (x: f32[], y: f32[]) -> f32[] {
   auto literal1 = LiteralUtil::CreateR1<float>({10, 20, 30});
   auto result = LiteralUtil::CreateR1<float>({11, 22, 33});
   EXPECT_EQ(result,
-            ExecuteAndTransfer(std::move(module), {&literal0}));
+            ExecuteAndTransfer(std::move(module), {&literal0, &literal1}));
 }
 
 }  // namespace
