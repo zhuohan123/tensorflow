@@ -18,6 +18,7 @@ limitations under the License.
 
 #include <string>
 #include <vector>
+#include <random>
 
 #include "absl/types/optional.h"
 #include "tensorflow/compiler/xla/test.h"
@@ -26,6 +27,9 @@ limitations under the License.
 #include "tensorflow/compiler/xla/tests/test_macros.h"
 #include "tensorflow/compiler/xla/types.h"
 #include "tensorflow/core/platform/types.h"
+#include "tensorflow/compiler/xla/client/xla_builder.h"
+#include "tensorflow/compiler/xla/client/xla_computation.h"
+#include "tensorflow/compiler/xla/tests/client_library_test_base.h"
 
 namespace xla {
 namespace {
