@@ -62,30 +62,5 @@ ENTRY %TupleCreate.v4 (v1: f32[], v2: f32[3], v3: f32[2,3]) -> (f32[], f32[3], f
   EXPECT_TRUE(RunAndCompare(hlo_string, nullopt));
 }
 
-XLA_TEST_F(MultipleDevicesConditionalTest, MultipleOperands) {
-  const char* module_str = R"(
-  HloModule test
-
-  add {
-    x = f32[] parameter(0)
-    y = f32[] parameter(1)
-    add = f32[] add(x, y)
-  }
-
-  ENTRY test_computation {
-    p0 = f32[3] parameter(0)
-    p1 = f32[2] parameter(1)
-    ROOT crs = (f32[3], f32[2]) all-reduce(p0, p1), to_apply=add
-  })";
-  auto module =
-      ParseAndReturnVerifiedModule(module_str, GetModuleConfigForTest())
-          .ValueOrDie();
-  auto literal0 = LiteralUtil::CreateR1<float>({1, 2, 3});
-  auto literal1 = LiteralUtil::CreateR1<float>({10, 20});
-  auto result = ExecuteAndTransfer(std::move(module), {&literal0, &literal1});
-  LOG(INFO) << "result: " << result;
-  EXPECT_EQ(LiteralUtil::MakeTuple({&literal0, &literal1}), result);
-}
-
 }  // namespace
 }  // namespace xla

@@ -2711,27 +2711,14 @@ xla_test(
 xla_test(
     name = "multiple_devices_conditional_test",
     srcs = ["multiple_devices_conditional_test.cc"],
-    disabled_backends = [
-        # All reduce is not supported on the interpreter backend.
-        "interpreter",
-    ],
     deps = [
-        ":client_library_test_base",
         ":hlo_test_base",
-        ":literal_test_util",
         ":test_macros_header",
-        ":xla_internal_test_main",
-        "//tensorflow/compiler/xla:literal",
-        "//tensorflow/compiler/xla:shape_util",
         "//tensorflow/compiler/xla:test",
-        "//tensorflow/compiler/xla:test_helpers",
         "//tensorflow/compiler/xla:types",
-        "//tensorflow/compiler/xla:xla_data_proto_cc",
-        "//tensorflow/compiler/xla/client:local_client",
-        "//tensorflow/compiler/xla/client:xla_builder",
-        "//tensorflow/compiler/xla/client:xla_computation",
+        "//tensorflow/compiler/xla/tests:literal_test_util",
+        "//tensorflow/compiler/xla/tests:xla_internal_test_main",
         "//tensorflow/core:lib",
-        "//tensorflow/core:test",
-        "//tensorflow/core/platform:stream_executor_no_cuda",
+        "@com_google_absl//absl/types:optional",
     ],
 )
