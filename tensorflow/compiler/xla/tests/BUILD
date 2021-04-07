@@ -2722,3 +2722,23 @@ xla_test(
         "@com_google_absl//absl/types:optional",
     ],
 )
+
+xla_test(
+    name = "conditional_test_simplified",
+    srcs = ["conditional_test_simplified.cc"],
+    shard_count = 2,
+    tags = ["no_rocm"],
+    deps = [
+        ":test_macros_header",
+        "//tensorflow/compiler/xla:xla_data_proto_cc",
+        "//tensorflow/compiler/xla/client:global_data",
+        "//tensorflow/compiler/xla/client:local_client",
+        "//tensorflow/compiler/xla/client:xla_builder",
+        "//tensorflow/compiler/xla/client:xla_computation",
+        "//tensorflow/compiler/xla/tests:client_library_test_base",
+        "//tensorflow/compiler/xla/tests:literal_test_util",
+        "//tensorflow/compiler/xla/tests:xla_internal_test_main",
+        "//tensorflow/core:lib",
+        "//tensorflow/core:test",
+    ],
+)
