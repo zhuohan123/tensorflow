@@ -817,9 +817,16 @@ StatusOr<std::unique_ptr<Executable>> Service::BuildExecutable(
                       CreateModuleFromProto(module_proto, *module_config));
   DumpHloModuleIfEnabled(*module, kBeforeOptimizationsDumpName);
 
+  ::tensorflow::internal::LogMessage(__FILE__, __LINE__, tensorflow::INFO) << StrFormat(
+      "??? BuildExecutable on service %p with module: %s", this,
+      module->ToString());
+
   TF_ASSIGN_OR_RETURN(
       module, backend->compiler()->RunHloPasses(std::move(module), executor,
                                                 device_allocator));
+  VLOG(0) << StrFormat(
+      "BuildExecutable on service %p with module: %s", this,
+      module->ToString());
 
   TF_ASSIGN_OR_RETURN(std::unique_ptr<Executable> executable,
                       backend->compiler()->RunBackend(

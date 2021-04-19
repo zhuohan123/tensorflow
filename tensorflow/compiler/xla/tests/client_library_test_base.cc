@@ -314,6 +314,7 @@ Status ClientLibraryTestBase::ComputeAndCompareLiteralWithStatus(
   }
 
   TF_ASSIGN_OR_RETURN(auto computation, builder->Build());
+  LOG(INFO) << "!!! computation XLO " << computation.proto().DebugString();
   if (ShapeUtil::ElementIsFloating(expected.shape()) ||
       ShapeUtil::ElementIsComplex(expected.shape())) {
     LOG(WARNING) << "performing exact comparison of floating point numbers";
@@ -375,6 +376,7 @@ Status ClientLibraryTestBase::ComputeAndCompareLiteralWithStatus(
   }
 
   TF_ASSIGN_OR_RETURN(auto computation, builder->Build());
+  LOG(INFO) << "!!! computation XLO " << computation.proto().DebugString();
   // We allow using a float expected literal for a bfloat16 output. In this
   // case, we need to convert the expected literal to bfloat16.
   const Literal* expected_ptr = &expected;
